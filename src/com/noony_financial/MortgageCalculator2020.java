@@ -1,8 +1,6 @@
 package com.noony_financial;
 
-import java.text.NumberFormat;
-
-public class MortgageCalculator {
+public class MortgageCalculator2020 implements IMortgageCalculator {
     private final static byte MONTHS_IN_YEAR = 12;
     private final static byte PERCENTAGE = 100;
 
@@ -10,36 +8,47 @@ public class MortgageCalculator {
     private double _annualInterest;
     private short _loanTerm;
 
-    public MortgageCalculator(int _principle, double _APR, short _loanTerm){
+    public MortgageCalculator2020(int _principle, double _APR, short _loanTerm){
         this._principle = _principle;
         this._annualInterest = _APR;
         this._loanTerm = _loanTerm;
     }
+    @Override
     public int get_principle() {
+
         return _principle;
     }
 
     private void set_principle(int _principle) {
+
         this._principle = _principle;
     }
 
+    @Override
     public double get_annualInterest() {
+
         return _annualInterest;
     }
 
     private void set_annualInterest(double _APR) {
+
         this._annualInterest = _APR;
     }
 
+    @Override
     public short get_loanTerm() {
+
         return _loanTerm;
     }
 
     private void set_loanTerm(short _loanTerm) {
+
         this._loanTerm = _loanTerm;
     }
 
+    @Override
     public double calculateMortgage () {
+
         // calculate user entered annual interest to a monthly interest rate
         double useInterestRate = getMonthlyInterest();
 
@@ -55,11 +64,15 @@ public class MortgageCalculator {
         return userMortgagePayment;
     }
 
-    private double getMonthlyInterest() {
+    @Override
+    public double getMonthlyInterest() {
+
         return _annualInterest / PERCENTAGE / MONTHS_IN_YEAR;
     }
 
-    private int getNumberOfPayments() {
+    @Override
+    public int getNumberOfPayments() {
+
         return _loanTerm * MONTHS_IN_YEAR;
     }
 

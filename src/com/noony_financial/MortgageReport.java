@@ -4,19 +4,22 @@ import java.text.NumberFormat;
 
 public class MortgageReport {
 
-    private MortgageCalculator calculator;
+    private IMortgageCalculator calculator;
 
-    public MortgageReport(MortgageCalculator calculator){
+    public MortgageReport(IMortgageCalculator calculator){
+
         this.calculator = calculator;
     }
 
     private static String formatCurrency(double value){
+
         // format mortgage payment into currency string
         String valueFormatted = NumberFormat.getCurrencyInstance().format(value);
         return valueFormatted;
     }
 
-    public void printMortgage(){
+    public void printMortgage(IMortgageCalculator calculator){
+
         double mortgage = calculator.calculateMortgage();
         String formattedMortgage = formatCurrency(mortgage);
 
@@ -27,7 +30,6 @@ public class MortgageReport {
         System.out.println("Loan Term: " + calculator.get_loanTerm());
         System.out.println("-------------------------------------------");
         System.out.println("Monthly Mortgage: " + formattedMortgage);
-
 
     }
 

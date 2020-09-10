@@ -1,8 +1,5 @@
 package com.noony_financial;
 
-import java.text.NumberFormat;
-import java.util.Scanner;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -20,12 +17,12 @@ public class Main {
         short userLoanTerm = (short) Console.readNumber("Loan Term: ", 1, 30);
 
         // instantiate a new mortgage calculator using input provided by user
-        MortgageCalculator calculator = new MortgageCalculator(userPrincipleAmount, userAnnualInterest, userLoanTerm );
+        IMortgageCalculator calculator = new MortgageCalculator2020(userPrincipleAmount, userAnnualInterest, userLoanTerm );
 
         // instantiate a new mortgage report using the mortgage calculator instance
         MortgageReport report = new MortgageReport(calculator);
 
         // print the mortgage report
-        report.printMortgage();
+        report.printMortgage(calculator);
     }
 }

@@ -21,7 +21,7 @@ public class Console {
     public static void greetUser(){
         System.out.println("\n");
         System.out.println("Welcome to Noony's Mortgage Calculator, please enter your name: ");
-        String userName = userInput.next();
+        String userName = userInput.nextLine();
         System.out.println(userName + ", " + "to calculate your monthly mortgage amount, please " +
                 "enter your total Principle, Annual Interest Rate and Loan Term in years.\n");
     }
