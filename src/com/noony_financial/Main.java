@@ -4,25 +4,21 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // establish a new console session
+        ISession activeSession = new Session();
+
         // greet user
-        Console.greetUser();
+        activeSession.greetUser();
 
-        // prompt user to enter Principle amount and assign to userPrincipleAmount variable
-        int userPrincipleAmount = (int) Console.readNumber("Principle: ", 1_000, 1_000_000);
+        // allow user to select service
+        activeSession.selectService();
 
-        // prompt user to enter APR and assign to userAPR variable
-        double userAnnualInterest = Console.readNumber("Annual Percentage Rate: ", 0, 30);
+        // validation testing - 1
+        // System.out.println(activeSession.serviceSelection());
 
-        // prompt user to enter total Loan Term in Months and assign to userLoanTerm variable
-        short userLoanTerm = (short) Console.readNumber("Loan Term: ", 1, 30);
+        // provide service
+        activeSession.provideService();
+        // provide report of services completed
 
-        // instantiate a new mortgage calculator using input provided by user
-        IMortgageCalculator calculator = new MortgageCalculator2020(userPrincipleAmount, userAnnualInterest, userLoanTerm );
-
-        // instantiate a new mortgage report using the mortgage calculator instance
-        MortgageReport report = new MortgageReport(calculator);
-
-        // print the mortgage report
-        report.printMortgage(calculator);
     }
 }

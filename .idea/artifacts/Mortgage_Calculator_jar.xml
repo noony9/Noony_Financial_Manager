@@ -2,7 +2,7 @@
   <artifact type="jar" name="Mortgage_Calculator:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Mortgage_Calculator_jar</output-path>
     <root id="archive" name="Mortgage_Calculator.jar">
-      <element id="module-output" name="Mortgage_Calculator" />
+      <element id="module-output" name="Noony_Financial_Manager" />
     </root>
   </artifact>
 </component>

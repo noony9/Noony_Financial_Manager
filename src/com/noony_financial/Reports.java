@@ -2,22 +2,17 @@ package com.noony_financial;
 
 import java.text.NumberFormat;
 
-public class MortgageReport {
+public class Reports implements IReports {
 
-    private IMortgageCalculator calculator;
-
-    public MortgageReport(IMortgageCalculator calculator){
-
-        this.calculator = calculator;
-    }
-
-    private static String formatCurrency(double value){
+    @Override
+    public String formatCurrency(double value){
 
         // format mortgage payment into currency string
         String valueFormatted = NumberFormat.getCurrencyInstance().format(value);
         return valueFormatted;
     }
 
+    @Override
     public void printMortgage(IMortgageCalculator calculator){
 
         double mortgage = calculator.calculateMortgage();
@@ -31,6 +26,12 @@ public class MortgageReport {
         System.out.println("-------------------------------------------");
         System.out.println("Monthly Mortgage: " + formattedMortgage);
 
+    }
+
+    @Override
+    public void printAccountBalance(IAccount account) {
+
+        System.out.println("Account Balance: " + -account.getAccountBalance());
     }
 
 }
