@@ -2,56 +2,65 @@ package com.noony_financial;
 
 import com.noony_financial_exceptions.InsufficientFundsException;
 
-import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Session implements ISession {
 
     private int _serviceSelection;
-    private final boolean validInput = false;
-    private final Scanner _userInput = new Scanner(System.in);
-    private IAccount _account;
-
+    private Scanner _userInput = new Scanner(System.in);
+    private IAccount _account = new Account(1234, 0);
 
     public double readNumber(String prompt, double min, double max) {
-        double value;
-        while (true){
+
+        double value = 0.0;
+        boolean validInput = false;
+        while (!validInput) {
             System.out.print(prompt);
-            value = _userInput.nextDouble();
-            while(!_userInput.hasNextDouble()){
-                System.out.print("Enter a numeric value between: " + min + " and " + max + "\n");
-                break;
+            try {
+                value = _userInput.nextDouble();
+                if (value >= min && value <= max) {
+                    validInput = true;
+                }
+                else {
+                    System.out.println("You have entered an invalid value. Enter a number between: " +
+                                    min + " " + "and" + " " + max + "\n");
+                    // clear the buffer
+                    _userInput.next();
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("You have entered an invalid character: " + "(" +  e.getMessage() + ")." + " " +  "Enter a number between: " +
+                        min + " " + "and" + " " + max + "\n");
+                // clear the buffer
+                _userInput.next();
             }
-            if (value >= min && value <= max)
-                break;
-            System.out.print("Enter a value between: " + min + " and " + max + "\n");
         }
         return value;
     }
 
-    @Override
     public void greetUser(){
 
         System.out.println("\n");
         System.out.println("Welcome to Noony's Financial Manager\n\n");
     }
 
-    @Override
-    public void selectService() {
+    public boolean selectService() {
+        boolean inSession = true;
         // prompt user to select service
         _serviceSelection = (int) readNumber("Please enter the number of the service you wish to access and " +
                 "press enter.\n" +
-                "[1] Account Management:\n" +
-                "[2] Mortgage Calculator:\n", 1, 2);
+                "[1] Account Management\n" +
+                "[2] Mortgage Calculator\n" + "[3] Exit Program\n", 1, 3);
 
         // continue to prompt user until user enters a correct value
-        if (!((_serviceSelection == 1) || (_serviceSelection == 2))) {
+        if (!((_serviceSelection == 1) || (_serviceSelection == 2) || (_serviceSelection == 3))) {
             System.out.println("Invalid Entry.  Please enter a valid selection.\n");
-            _serviceSelection = Integer.parseInt(_userInput.nextLine());
         }
+        else if (_serviceSelection == 3)
+            inSession = false;
+        return inSession;
     }
 
-    @Override
     public void provideService() {
 
         if (_serviceSelection == 1) {
@@ -68,30 +77,41 @@ public class Session implements ISession {
             // provide selected service
             switch (_serviceSelection) {
                 case 1: {
-                    System.out.println("Enter amount to deposit: ");
+
+                    var value = readNumber("Enter amount to deposit: ", 0, 5000000);
                     try {
-                        float value = _userInput.nextFloat();
                         _account.deposit(value);
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    System.out.println("Amount Deposited:" + " " + value + "\n");
+                    break;
                 }
                 case 2: {
-                    System.out.println("Enter amount to withdraw: ");
+
+                    var value = readNumber("Enter amount to withdraw: ", 0,
+                            _account.getAccountBalance());
                     try {
-                        float value = _userInput.nextFloat();
                         _account.withdraw(value);
-                    } catch (InsufficientFundsException e) {
+                    }
+                    catch (InsufficientFundsException e) {
                         e.printStackTrace();
                     }
+                    System.out.println("Amount withdrawn:" + " " + value + "\n");
+                    break;
                 }
                 case 3: {
-                    System.out.println("Account Balance: " + -_account.getAccountBalance());
+                    System.out.println("Account Balance: " + -_account.getAccountBalance() + "\n");
+                    break;
                 }
                 default: {
                     break;
                 }
             } // end switch
+
+            // return user to main screen
+            selectService();
+
         } // end if
         else if (_serviceSelection == 2){
 
@@ -114,6 +134,14 @@ public class Session implements ISession {
             // print the mortgage report
             IReports report = new Reports();
             report.printMortgage(calculator);
+            System.out.println("Press any key to continue...");
+
+            // return user to main screen
+            selectService();
+
         } // end else
+        else if (_serviceSelection == 3){
+            System.out.println("Exiting program...");
+        }
     } // end method
 } // end class

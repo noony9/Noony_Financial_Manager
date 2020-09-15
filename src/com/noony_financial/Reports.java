@@ -4,7 +4,6 @@ import java.text.NumberFormat;
 
 public class Reports implements IReports {
 
-    @Override
     public String formatCurrency(double value){
 
         // format mortgage payment into currency string
@@ -12,7 +11,6 @@ public class Reports implements IReports {
         return valueFormatted;
     }
 
-    @Override
     public void printMortgage(IMortgageCalculator calculator){
 
         double mortgage = calculator.calculateMortgage();
@@ -28,7 +26,6 @@ public class Reports implements IReports {
 
     }
 
-    @Override
     public void printAccountBalance(IAccount account) {
 
         System.out.println("Account Balance: " + -account.getAccountBalance());

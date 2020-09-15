@@ -1,1 +1,1 @@
-Making the conversion from C# to Java by building a financial management program.  It is console application in it's current state.  I intend on recreating as a JavaFX app and extending the application to store/retrieve user account information and reports locally and on a database as well as added functionality to foster learning.
+# java_mortgage_calculator
