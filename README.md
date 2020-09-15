@@ -1,1 +1,1 @@
-# java_mortgage_calculator
+Financial management project
